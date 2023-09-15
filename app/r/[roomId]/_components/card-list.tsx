@@ -28,9 +28,9 @@ export const CardList = () => {
         <CardItem
           key={`card-${card}`}
           className={cn(
-            player!.selectedValue === card &&
+            player?.selectedValue === card &&
               getBackgroundColor(player!.profile.color),
-            player!.selectedValue === card &&
+            player?.selectedValue === card &&
               getTextColor(player!.profile.color)
           )}
           onClick={async () => {

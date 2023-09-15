@@ -16,9 +16,13 @@ export const PlayerItem = ({
         getBackgroundColor(player.profile.color)
       )}
     >
-      <div className="border-border/30 flex h-16 w-10 items-center justify-center rounded-sm border">
-        {player.selectedValue}
-      </div>
+      <div
+        className={cn(
+          "border-border/20 flex h-16 w-10 items-center justify-center rounded border",
+          player.selectedValue !== null &&
+            getBackgroundColor(player.profile.color)
+        )}
+      />
       <Image
         src={player.profile.avatarUrl}
         width={96}

@@ -1,13 +1,13 @@
 "use client";
 
-import { trpc } from "@/lib/trpc/client";
+import { useEffect } from "react";
 import { usePlayers } from "../_hooks/use-players";
 import { PlayerItem } from "./player-item";
 
 export const PlayerList = ({ roomId }: { roomId: string }) => {
   const players = usePlayers({ roomId });
 
-  console.log(players);
+  useEffect(() => {}, []);
 
   return (
     <div className="flex flex-1 items-center justify-center">
