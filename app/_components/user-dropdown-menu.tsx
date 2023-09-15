@@ -11,9 +11,13 @@ export const UserDropdownMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="bg-background/10 text-primary-foreground hover:bg-background/20 flex items-center justify-center rounded-md p-2 transition-all duration-100 focus-within:outline-none">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="text-primary-foreground bg-background/10"
+        >
           <HiUser className="h-5 w-5" />
-        </button>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" side="bottom">
         <DropdownMenuItem>

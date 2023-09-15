@@ -26,7 +26,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <TrpcProvider>
             <div className="flex h-[calc(100dvh)] flex-col">
-              <div className="flex flex-1 flex-col">{children}</div>
+              <div className="flex flex-1">{children}</div>
             </div>
             <Toaster />
           </TrpcProvider>

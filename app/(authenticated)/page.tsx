@@ -1,5 +1,5 @@
-import { LandingCard } from "./_components/landing-card";
-import { LandingForm } from "./_components/landing-form";
+import { LandingCard } from "../_components/landing-card";
+import { LandingForm } from "../_components/landing-form";
 
 export default function Home() {
   return (
