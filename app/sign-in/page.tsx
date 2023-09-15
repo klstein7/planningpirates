@@ -1,20 +1,24 @@
-import { FormField } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { LandingCard } from "@/app/_components/landing-card";
-import { cn } from "@/lib/utils";
-import { Gluten } from "next/font/google";
+import { SignInForm } from "./_components/sign-in-form";
+import { getSession } from "next-auth/react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { api } from "@/lib/trpc/api";
 
-const gluten = Gluten({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
+export default async function SignInPage() {
+  const session = await getServerSession(authOptions);
 
-export default function Home() {
+  if (session) {
+    await api.profiles.sync.mutate();
+    redirect("/");
+  }
+
   return (
-    <div className="flex h-full w-full bg-[url('/images/bg.png')] bg-cover bg-center">
+    <div className="flex h-full w-full bg-[url('/images/bg.png')] bg-center">
       <div className="flex h-full w-full items-center justify-center backdrop-blur-md">
         <LandingCard>
-          <div className="flex flex-col gap-6">Test</div>
+          <SignInForm />
         </LandingCard>
       </div>
     </div>

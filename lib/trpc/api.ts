@@ -18,7 +18,7 @@ export const api = createTRPCNextAppDirServer<typeof appRouter>({
           enabled: (op) => true,
         }),
         nextCacheLink({
-          revalidate: 0,
+          revalidate: 1,
           router: appRouter,
           async createContext() {
             const { session } = await getUserAuth();
