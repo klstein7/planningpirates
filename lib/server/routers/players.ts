@@ -1,5 +1,9 @@
 import { db } from "@/lib/db";
-import { PlayersFindSchema, PlayersSyncSchema } from "../schemas/players";
+import {
+  PlayerFindSchema,
+  PlayerSyncSchema,
+  PlayerUpdateSchema,
+} from "../schemas/players";
 import { protectedProcedure, router } from "../trpc";
 import { and, eq } from "drizzle-orm";
 import { players } from "@/lib/db/schema";
@@ -7,7 +11,7 @@ import { createId } from "@paralleldrive/cuid2";
 
 export const playersRouter = router({
   sync: protectedProcedure
-    .input(PlayersSyncSchema)
+    .input(PlayerSyncSchema)
     .mutation(async ({ ctx, input }) => {
       const player = await db.query.players.findFirst({
         where: and(
@@ -25,7 +29,7 @@ export const playersRouter = router({
         });
       }
     }),
-  find: protectedProcedure.input(PlayersFindSchema).query(async ({ input }) => {
+  find: protectedProcedure.input(PlayerFindSchema).query(async ({ input }) => {
     return db.query.players.findMany({
       where: eq(players.roomId, input.roomId),
       with: {
@@ -33,4 +37,24 @@ export const playersRouter = router({
       },
     });
   }),
+  update: protectedProcedure
+    .input(PlayerUpdateSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { id, ...values } = input;
+      const results = await db
+        .update(players)
+        .set({
+          ...values,
+        })
+        .where(eq(players.id, id))
+        .returning();
+
+      const player = results.pop();
+
+      if (!player) {
+        throw new Error("Failed to update player");
+      }
+
+      return player;
+    }),
 });

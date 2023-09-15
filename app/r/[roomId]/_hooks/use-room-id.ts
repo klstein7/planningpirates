@@ -1,6 +1,6 @@
 import { useParams } from "next/navigation";
 
-export const useRoom = () => {
+export const useRoomId = () => {
   const params = useParams();
 
   const roomId = params.roomId as string;

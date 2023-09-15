@@ -1,10 +1,15 @@
 import { players } from "@/lib/db/schema";
-import { createSelectSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
-export const PlayersFindSchema = createSelectSchema(players).pick({
+export const PlayerFindSchema = createSelectSchema(players).pick({
   roomId: true,
 });
 
-export const PlayersSyncSchema = createSelectSchema(players).pick({
+export const PlayerSyncSchema = createSelectSchema(players).pick({
   roomId: true,
+});
+
+export const PlayerUpdateSchema = createInsertSchema(players).pick({
+  id: true,
+  selectedValue: true,
 });
