@@ -1,13 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { HiPaintBrush, HiUser } from "react-icons/hi2";
+import { HiUser } from "react-icons/hi2";
+import { UpdateUserProfileDialog } from "./update-profile-form";
+import { useProfile } from "../_hooks/use-profile";
 
 export const UserDropdownMenu = () => {
+  const profile = useProfile();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -20,10 +24,7 @@ export const UserDropdownMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" side="bottom">
-        <DropdownMenuItem>
-          <HiPaintBrush className="mr-2 h-4 w-4" />
-          Customize
-        </DropdownMenuItem>
+        {profile.data && <UpdateUserProfileDialog profile={profile.data} />}
       </DropdownMenuContent>
     </DropdownMenu>
   );

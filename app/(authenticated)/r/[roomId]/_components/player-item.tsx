@@ -2,6 +2,8 @@ import { getBackgroundColor, getTextColor } from "@/app/_util/colors";
 import { RouterOutput } from "@/lib/trpc/utils";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useIsHost } from "../_hooks/use-is-host";
+import { PiCrownSimpleFill } from "react-icons/pi";
 
 export const PlayerItem = ({
   player,
@@ -31,10 +33,11 @@ export const PlayerItem = ({
       />
       <div
         className={cn(
-          "truncate text-xs font-medium",
+          "flex items-center gap-1 truncate text-xs font-medium",
           getTextColor(player.profile.color)
         )}
       >
+        {player.role === "host" && <PiCrownSimpleFill className="h-3 w-3" />}
         {player.profile.name}
       </div>
     </div>
