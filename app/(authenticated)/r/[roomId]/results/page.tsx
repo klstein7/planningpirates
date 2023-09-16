@@ -2,14 +2,28 @@ import { Separator } from "@/components/ui/separator";
 import { SelectedValueList } from "./_components/selected-value-list";
 import { SelectedValueStats } from "./_components/selected-value-stats";
 import { ResultsConfetti } from "./_components/results-confetti";
+import { StatusMessage } from "./_components/status-message";
+import { ResultsActions } from "./_components/results-actions";
+import { api } from "@/lib/trpc/api";
+import { redirect } from "next/navigation";
 
-export default function ResultsPage({
+export default async function ResultsPage({
   params: { roomId },
 }: {
   params: {
     roomId: string;
   };
 }) {
+  const room = await api.rooms.get.query({ id: roomId });
+
+  if (!room) {
+    redirect("/");
+  }
+
+  if (room.status !== "revealed") {
+    redirect(`/r/${roomId}`);
+  }
+
   return (
     <>
       <div className="flex w-full flex-1 items-center justify-center">
@@ -20,6 +34,9 @@ export default function ResultsPage({
           <Separator />
           <SelectedValueStats />
           <Separator />
+          <StatusMessage />
+          <Separator />
+          <ResultsActions />
         </div>
       </div>
       <ResultsConfetti />
