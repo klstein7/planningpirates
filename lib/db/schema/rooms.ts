@@ -5,7 +5,7 @@ import { players } from "./players";
 export const rooms = pgTable("rooms", {
   id: varchar("id", { length: 4 }).primaryKey(),
   title: text("title").default("").notNull(),
-  description: text("description").default("").notNull(),
+  statusMessage: text("status_message").default("").notNull(),
   status: varchar("status", {
     enum: ["voting", "revealed"],
   })

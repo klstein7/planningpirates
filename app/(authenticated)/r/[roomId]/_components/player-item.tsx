@@ -33,12 +33,12 @@ export const PlayerItem = ({
       />
       <div
         className={cn(
-          "flex items-center gap-1 truncate text-xs font-medium",
+          "flex w-20 items-center justify-center gap-1 text-xs font-medium",
           getTextColor(player.profile.color)
         )}
       >
         {player.role === "host" && <PiCrownSimpleFill className="h-3 w-3" />}
-        {player.profile.name}
+        <span className="truncate">{player.profile.name}</span>
       </div>
     </div>
   );

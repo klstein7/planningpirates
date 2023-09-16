@@ -16,7 +16,7 @@ export const PlayerList = ({
   initialPlayers: RouterOutput["players"]["find"];
 }) => {
   const updateRoomMutation = useUpdateRoom();
-  const players = usePlayers({ roomId }, { initialData: initialPlayers });
+  const players = usePlayers({ initialData: initialPlayers });
 
   return (
     <div className="flex flex-1 items-center justify-center">

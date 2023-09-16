@@ -1,12 +1,11 @@
 import { trpc } from "@/lib/trpc/client";
 import { RouterOutput } from "@/lib/trpc/utils";
+import { useRoomId } from "./use-room-id";
 
-export const usePlayers = (
-  { roomId }: { roomId: string },
-  opts?: {
-    initialData?: RouterOutput["players"]["find"];
-  }
-) => {
+export const usePlayers = (opts?: {
+  initialData?: RouterOutput["players"]["find"];
+}) => {
+  const { roomId } = useRoomId();
   return trpc.players.find.useQuery(
     { roomId },
     {

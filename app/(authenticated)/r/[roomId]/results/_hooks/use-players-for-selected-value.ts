@@ -1,18 +1,16 @@
 import { useMemo } from "react";
 import { usePlayers } from "../../_hooks/use-players";
-import { useRoomId } from "../../_hooks/use-room-id";
 
 export const usePlayersForSelectedValue = ({
   selectedValue,
 }: {
   selectedValue: number;
 }) => {
-  const { roomId } = useRoomId();
-  const players = usePlayers({ roomId });
+  const players = usePlayers();
 
   const playersForSelectedValue = useMemo(() => {
     if (!players.data) {
-      return;
+      return [];
     }
 
     const playersForSelectedValue = players.data.filter(
@@ -23,6 +21,6 @@ export const usePlayersForSelectedValue = ({
   }, [players.data, selectedValue]);
 
   return {
-    playersForSelectedValue: playersForSelectedValue || [],
+    playersForSelectedValue: playersForSelectedValue,
   };
 };
