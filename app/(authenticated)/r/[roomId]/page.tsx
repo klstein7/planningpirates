@@ -1,5 +1,4 @@
-import { api } from "@/lib/trpc/api";
-import { api as actionsApi } from "@/lib/server/actions";
+import { api } from "@/lib/server/actions";
 import { PlayerList } from "./_components/player-list";
 import { CardList } from "./_components/card-list";
 import { redirect } from "next/navigation";
@@ -17,9 +16,9 @@ export default async function RoomPage({
 }) {
   const session = (await getServerSession(authOptions)) as Session;
 
-  const players = await actionsApi.players.find({ roomId });
+  const players = await api.players.find({ roomId });
 
-  const room = await api.rooms.get.query({ id: roomId });
+  const room = await api.rooms.get({ id: roomId });
 
   const player = players.find((player) => player.profileId === session.user.id);
 

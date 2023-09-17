@@ -1,22 +1,11 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { usePlayers } from "../../_hooks/use-players";
+import { SelectedValuesContext } from "../_context/selected-values-context";
 
 export const useSelectedValues = () => {
-  const players = usePlayers();
-
-  const selectedValues = useMemo(() => {
-    if (!players.data) {
-      return [];
-    }
-
-    const selectedValues = players.data
-      .filter((player) => player.selectedValue)
-      .map((player) => player.selectedValue);
-
-    return selectedValues as number[];
-  }, [players.data]);
+  const selectedValues = useContext(SelectedValuesContext);
 
   return {
-    selectedValues: selectedValues,
+    selectedValues,
   };
 };

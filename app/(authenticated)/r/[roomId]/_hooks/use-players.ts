@@ -1,15 +1,10 @@
-import { trpc } from "@/lib/trpc/client";
-import { RouterOutput } from "@/lib/trpc/utils";
-import { useRoomId } from "./use-room-id";
+import { useContext } from "react";
+import { PlayersContext } from "../_context/players-context";
 
-export const usePlayers = (opts?: {
-  initialData?: RouterOutput["players"]["find"];
-}) => {
-  const { roomId } = useRoomId();
-  return trpc.players.find.useQuery(
-    { roomId },
-    {
-      initialData: opts?.initialData,
-    }
-  );
+export const usePlayers = () => {
+  const players = useContext(PlayersContext);
+
+  return {
+    players,
+  };
 };

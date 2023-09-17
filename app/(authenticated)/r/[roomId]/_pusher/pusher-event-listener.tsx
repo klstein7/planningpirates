@@ -44,18 +44,17 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
       }
     );
 
-    channel.bind(
-      "api.rooms.update",
-      async (data: RouterOutput["rooms"]["update"]) => {
-        console.log("api.rooms.update", data);
-      }
-    );
+    channel.bind("api.rooms.update", async (data: API["rooms"]["update"]) => {
+      console.log("api.rooms.update", data);
+
+      api.rooms.revalidate({ roomId });
+    });
 
     return () => {
       channel.unbind();
       pusher.unsubscribe(roomId);
     };
-  }, [roomId]);
+  }, [roomId, session.data]);
 
   return null;
 };

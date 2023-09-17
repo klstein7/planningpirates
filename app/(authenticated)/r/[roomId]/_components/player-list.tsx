@@ -1,7 +1,7 @@
 import { PlayerItem } from "./player-item";
-import { Button } from "@/components/ui/button";
-import { API, api } from "@/lib/server/actions";
-import { TbCardsFilled } from "react-icons/tb";
+import { API } from "@/lib/server/actions";
+
+import { RevealCardsButton } from "./reveal-cards-button";
 
 export const PlayerList = async ({
   players,
@@ -17,22 +17,9 @@ export const PlayerList = async ({
           ))}
         </div>
         <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-3 bg-[url('/images/room.png')] bg-contain bg-center">
-          <Button>
-            <TbCardsFilled className="mr-2 h-5 w-5" />
-            Flip &apos;em!
-          </Button>
+          <RevealCardsButton />
         </div>
       </div>
     </div>
   );
 };
-
-/*
-            loading={updateRoomMutation.isLoading}
-            onClick={async () => {
-              await updateRoomMutation.mutateAsync({
-                id: roomId,
-                status: "revealed",
-              });
-            }}
-*/

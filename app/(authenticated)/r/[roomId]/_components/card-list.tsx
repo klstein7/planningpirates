@@ -1,6 +1,5 @@
 "use client";
 
-import { usePlayer } from "../_hooks/use-player";
 import { CardItem } from "./card-item";
 import { cn } from "@/lib/utils";
 import { getBackgroundColor, getTextColor } from "@/app/_util/colors";

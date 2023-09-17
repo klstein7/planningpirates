@@ -6,19 +6,15 @@ export const usePlayersForSelectedValue = ({
 }: {
   selectedValue: number;
 }) => {
-  const players = usePlayers();
+  const { players } = usePlayers();
 
   const playersForSelectedValue = useMemo(() => {
-    if (!players.data) {
-      return [];
-    }
-
-    const playersForSelectedValue = players.data.filter(
+    const playersForSelectedValue = players.filter(
       (player) => player.selectedValue === selectedValue
     );
 
     return playersForSelectedValue;
-  }, [players.data, selectedValue]);
+  }, [players, selectedValue]);
 
   return {
     playersForSelectedValue: playersForSelectedValue,
