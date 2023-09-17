@@ -1,9 +1,10 @@
 import { api } from "@/lib/trpc/api";
+import { api as actionsApi } from "@/lib/server/actions";
 import { PlayerList } from "./_components/player-list";
 import { CardList } from "./_components/card-list";
-import { UserDropdownMenu } from "@/app/(authenticated)/_components/user-dropdown-menu";
-import { PusherEventListener } from "./_pusher/pusher-event-listener";
 import { redirect } from "next/navigation";
+import { Session, getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const dynamic = "force-dynamic";
 
@@ -14,11 +15,13 @@ export default async function RoomPage({
     roomId: string;
   };
 }) {
-  await api.players.sync.mutate({ roomId });
+  const session = (await getServerSession(authOptions)) as Session;
 
-  const initialPlayers = await api.players.find.query({ roomId });
+  const players = await actionsApi.players.find({ roomId });
 
   const room = await api.rooms.get.query({ id: roomId });
+
+  const player = players.find((player) => player.profileId === session.user.id);
 
   if (!room) {
     redirect("/");
@@ -30,8 +33,8 @@ export default async function RoomPage({
 
   return (
     <div className="flex flex-1 flex-col gap-3">
-      <PlayerList roomId={roomId} initialPlayers={initialPlayers} />
-      <CardList />
+      <PlayerList players={players} />
+      {player && <CardList player={player} />}
     </div>
   );
 }

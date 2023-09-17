@@ -1,18 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/lib/trpc/client";
+import { api } from "@/lib/server/actions";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const LandingForm = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const createRoomMutation = trpc.rooms.create.useMutation();
   return (
     <div className="flex w-full flex-col gap-3">
       <Button
-        loading={createRoomMutation.isLoading}
+        loading={loading}
         onClick={async () => {
-          const room = await createRoomMutation.mutateAsync();
+          setLoading(true);
+          const room = await api.rooms.create();
+          setLoading(false);
           router.push(`/r/${room.id}`);
         }}
       >

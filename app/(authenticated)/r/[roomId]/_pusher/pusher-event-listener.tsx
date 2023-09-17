@@ -3,35 +3,35 @@
 import { useEffect } from "react";
 import { pusher } from ".";
 import { RouterOutput } from "@/lib/trpc/utils";
-import { trpc } from "@/lib/trpc/client";
-import { useRouter } from "next/navigation";
+import { API, api } from "@/lib/server/actions";
+import { useSession } from "next-auth/react";
 
 export const PusherEventListener = ({ roomId }: { roomId: string }) => {
-  const context = trpc.useContext();
-  const router = useRouter();
+  const session = useSession();
 
   useEffect(() => {
     const channel = pusher.subscribe(roomId);
 
-    channel.bind(
-      "api.players.create",
-      async (data: RouterOutput["players"]["sync"]) => {
-        console.log("api.players.create", data);
-        /*
+    channel.bind("api.players.create", async () => {
+      console.log("api.players.create");
+      /*
         if (data.id === player.id) {
           return;
         }
         */
-        await context.players.find.invalidate({ roomId });
-      }
-    );
+      api.rooms.revalidate({ roomId });
+    });
 
     channel.bind(
       "api.players.update",
-      async (data: RouterOutput["players"]["update"]) => {
+      async (data: API["players"]["update"]) => {
         console.log("api.players.update", data);
 
-        await context.players.find.invalidate({ roomId });
+        if (session.data?.user?.id === data.profileId) {
+          return;
+        }
+
+        api.rooms.revalidate({ roomId });
       }
     );
 
@@ -40,7 +40,7 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
       async (data: RouterOutput["players"]["update"]) => {
         console.log("api.profiles.update", data);
 
-        await context.players.find.invalidate({ roomId });
+        // await context.players.find.invalidate({ roomId });
       }
     );
 
@@ -48,12 +48,6 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
       "api.rooms.update",
       async (data: RouterOutput["rooms"]["update"]) => {
         console.log("api.rooms.update", data);
-
-        if (data.status === "revealed") {
-          router.push(`/r/${roomId}/results`);
-        } else {
-          router.push(`/r/${roomId}`);
-        }
       }
     );
 
