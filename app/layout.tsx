@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import NextAuthProvider from "@/lib/auth/Provider";
-import TrpcProvider from "@/lib/trpc/Provider";
 import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
@@ -24,12 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <NextAuthProvider>
-          <TrpcProvider>
-            <div className="flex h-[calc(100dvh)] flex-col">
-              <div className="flex flex-1">{children}</div>
-            </div>
-            <Toaster />
-          </TrpcProvider>
+          <div className="flex h-[calc(100dvh)] flex-col">
+            <div className="flex flex-1">{children}</div>
+          </div>
+          <Toaster />
         </NextAuthProvider>
       </body>
     </html>

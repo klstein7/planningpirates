@@ -5,10 +5,17 @@ import { TbCardsFilled } from "react-icons/tb";
 import { useRoomId } from "../_hooks/use-room-id";
 import { api } from "@/lib/server/actions";
 import { useState } from "react";
+import { useIsHost } from "../_hooks/use-is-host";
 
 export const RevealCardsButton = () => {
   const [loading, setLoading] = useState(false);
   const { roomId } = useRoomId();
+  const { isHost } = useIsHost();
+
+  if (!isHost) {
+    return null;
+  }
+
   return (
     <Button
       loading={loading}

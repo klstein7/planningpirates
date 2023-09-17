@@ -1,11 +1,6 @@
 {
   "hasSrc": false,
-  "packages": [
-    "drizzle",
-    "next-auth",
-    "trpc",
-    "shadcn-ui"
-  ],
+  "packages": ["drizzle", "next-auth", "shadcn-ui"],
   "preferredPackageManager": "pnpm",
   "rootPath": "",
   "driver": "pg",

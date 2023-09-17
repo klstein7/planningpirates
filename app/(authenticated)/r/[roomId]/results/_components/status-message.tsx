@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useRoom } from "../../_hooks/use-room";
+
 import { TriangleLeftIcon, TriangleRightIcon } from "@radix-ui/react-icons";
+import { useRoom } from "../../_hooks/useRoom";
 
 export const StatusMessage = () => {
-  const room = useRoom();
+  const { room } = useRoom();
 
   return (
     <div className="flex items-center">
@@ -18,7 +19,7 @@ export const StatusMessage = () => {
       <TriangleLeftIcon className="text-secondary -mr-3.5 h-8 w-8" />
       <div className="flex-1">
         <div className="bg-secondary flex rounded-md p-3 text-sm">
-          {room.data?.statusMessage}
+          {room.statusMessage}
         </div>
       </div>
     </div>

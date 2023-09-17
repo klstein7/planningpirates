@@ -1,7 +1,7 @@
-import { UserDropdownMenu } from "../../_components/user-dropdown-menu";
+import { api } from "@/lib/server/actions";
 import { PusherEventListener } from "./_pusher/pusher-event-listener";
 
-export default function RoomLayout({
+export default async function RoomLayout({
   children,
   params: { roomId },
 }: {
@@ -10,15 +10,11 @@ export default function RoomLayout({
     roomId: string;
   };
 }) {
+  const profile = await api.profiles.get();
   return (
     <>
-      <div className="flex h-full w-full bg-[url('/images/floor.png')] bg-center">
-        <div className="flex h-full w-full flex-col items-center gap-3 backdrop-blur-sm">
-          <div className="flex w-full justify-end p-3">
-            <UserDropdownMenu />
-          </div>
-          {children}
-        </div>
+      <div className="flex h-full w-full flex-col items-center gap-3">
+        {children}
       </div>
       <PusherEventListener roomId={roomId} />
     </>

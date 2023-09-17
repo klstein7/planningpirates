@@ -88,6 +88,7 @@ export const update = async (input: z.infer<typeof RoomUpdateSchema>) => {
     });
 
     const crewmates = playersInRoom
+      .filter((p) => p.selectedValue)
       .map((p) => `${p.profile.name}: ${p.selectedValue}`)
       .join(", ");
 

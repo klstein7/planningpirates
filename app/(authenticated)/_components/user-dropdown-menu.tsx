@@ -9,12 +9,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { HiUser } from "react-icons/hi2";
 import { UpdateUserProfileDialog } from "./update-profile-form";
-import { useProfile } from "../_hooks/use-profile";
+
 import { PiSignOutDuotone } from "react-icons/pi";
 import { signOut } from "next-auth/react";
+import { API } from "@/lib/server/actions";
 
-export const UserDropdownMenu = () => {
-  const profile = useProfile();
+export const UserDropdownMenu = ({
+  profile,
+}: {
+  profile: API["profiles"]["get"];
+}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,7 +31,7 @@ export const UserDropdownMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" side="bottom">
-        {profile.data && <UpdateUserProfileDialog profile={profile.data} />}
+        {profile && <UpdateUserProfileDialog profile={profile} />}
         <DropdownMenuItem
           onClick={async () => {
             await signOut({

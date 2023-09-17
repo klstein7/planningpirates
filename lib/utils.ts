@@ -36,20 +36,41 @@ export function getMedian(selectedValues: number[]) {
   return isNaN(median) ? null : parseFloat(median.toFixed(1));
 }
 
-export function getAlignmentPercentage(selectedValues: number[]) {
-  const medianSelectedValue = getMedian(selectedValues);
+const getModes = (arr: number[]): number[] => {
+  const numMapping: { [key: number]: number } = {};
+  const modes: number[] = [];
+
+  arr.forEach((num) => {
+    numMapping[num] = (numMapping[num] || 0) + 1;
+  });
+
+  for (const num in numMapping) {
+    if (numMapping[num] > 1) {
+      modes.push(Number(num));
+    }
+  }
+
+  return modes;
+};
+
+export function getAlignmentPercentage(
+  selectedValues: number[]
+): number | null {
   if (!selectedValues || selectedValues.length === 0) {
     return null;
   }
 
-  if (medianSelectedValue === null) {
+  const modes = getModes(selectedValues);
+
+  if (modes.length === 0) {
     return 0;
   }
 
   const tolerance = 1;
-  const alignedValuesCount = selectedValues.filter(
-    (value) => Math.abs(value - medianSelectedValue) <= tolerance
+  const alignedValuesCount = selectedValues.filter((value) =>
+    modes.some((mode) => Math.abs(value - mode) <= tolerance)
   ).length;
+
   const totalValues = selectedValues.length;
   const percentage = (alignedValuesCount / totalValues) * 100;
 

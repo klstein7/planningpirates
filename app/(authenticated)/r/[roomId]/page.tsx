@@ -4,6 +4,7 @@ import { CardList } from "./_components/card-list";
 import { redirect } from "next/navigation";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { PlayersProvider } from "./_context/players-provider";
 
 export const dynamic = "force-dynamic";
 
@@ -31,9 +32,11 @@ export default async function RoomPage({
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-3">
-      <PlayerList players={players} />
-      {player && <CardList player={player} />}
-    </div>
+    <PlayersProvider players={players}>
+      <div className="flex flex-1 flex-col gap-3">
+        <PlayerList players={players} />
+        {player && <CardList player={player} />}
+      </div>
+    </PlayersProvider>
   );
 }

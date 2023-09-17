@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { pusher } from ".";
-import { RouterOutput } from "@/lib/trpc/utils";
 import { API, api } from "@/lib/server/actions";
 import { useSession } from "next-auth/react";
 
@@ -37,7 +36,7 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
 
     channel.bind(
       "api.profiles.update",
-      async (data: RouterOutput["players"]["update"]) => {
+      async (data: API["players"]["update"]) => {
         console.log("api.profiles.update", data);
 
         api.rooms.revalidate({ roomId });

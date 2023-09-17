@@ -2,6 +2,9 @@ import { getServerSession } from "next-auth";
 import { headers } from "next/headers";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { Navbar } from "../_components/navbar";
+import { cn } from "@/lib/utils";
+import { BackgroundImage } from "../_components/background-image";
 
 export default async function AuthenticatedLayout({
   children,
@@ -12,13 +15,18 @@ export default async function AuthenticatedLayout({
 
   const url = headersList.get("x-url") || "";
 
-  console.log({ url });
-
   const session = await getServerSession(authOptions);
 
   if (!session) {
     redirect(`/sign-in?callbackUrl=${url}`);
   }
 
-  return <div className="flex flex-1 flex-col">{children}</div>;
+  return (
+    <BackgroundImage>
+      <div className="flex flex-1 flex-col">
+        <Navbar />
+        <div className="flex flex-1 flex-col">{children}</div>
+      </div>
+    </BackgroundImage>
+  );
 }
