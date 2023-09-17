@@ -5,6 +5,7 @@ import NextAuth from "next-auth/next";
 import { env } from "@/lib/env.mjs";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import { api } from "@/lib/server/actions";
 
 declare module "next-auth" {
   interface Session {
@@ -17,8 +18,20 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),
   callbacks: {
-    session: ({ session, user }) => {
+    session: async ({ session, user }) => {
+      const profile = await api.profiles.get({
+        id: user.id,
+      });
+
+      if (!profile) {
+        await api.profiles.create({
+          id: user.id,
+          name: user.name ?? "New user",
+        });
+      }
+
       session.user.id = user.id;
+
       return session;
     },
   },

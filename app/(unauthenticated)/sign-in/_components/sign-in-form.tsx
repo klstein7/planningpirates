@@ -8,13 +8,16 @@ import { useForm } from "react-hook-form";
 import { RiGithubFill, RiGoogleFill } from "react-icons/ri";
 import { HiEnvelope } from "react-icons/hi2";
 import { signIn } from "next-auth/react";
+import { useParams, useSearchParams } from "next/navigation";
 
 export const SignInForm = () => {
+  const params = useSearchParams();
   const form = useForm<{ email: string }>({
     defaultValues: {
       email: "",
     },
   });
+
   return (
     <div className="flex w-full flex-col gap-3">
       <Form {...form}>
@@ -41,7 +44,16 @@ export const SignInForm = () => {
       </Form>
       <Button>Sign in with email</Button>
       <Separator />
-      <Button variant="outline" onClick={() => signIn("google")}>
+      <Button
+        variant="outline"
+        onClick={() => {
+          const callbackUrl = params.get("callbackUrl");
+
+          signIn("google", {
+            callbackUrl: callbackUrl || undefined,
+          });
+        }}
+      >
         <RiGoogleFill className="mr-2 h-5 w-5" />
         Sign in with Google
       </Button>

@@ -7,7 +7,11 @@ import { eq } from "drizzle-orm";
 import { getRandomAvatarUrl } from "@/app/_util/avatars";
 import { getRandomColor } from "@/app/_util/colors";
 import { z } from "zod";
-import { ProfileUpdateSchema } from "../schemas/profiles";
+import {
+  ProfileCreateSchema,
+  ProfileGetSchema,
+  ProfileUpdateSchema,
+} from "../schemas/profiles";
 import { pusher } from "@/lib/pusher";
 
 export const sync = async () => {
@@ -27,11 +31,18 @@ export const sync = async () => {
   }
 };
 
-export const get = async () => {
-  const session = await authorize();
+export const get = async (input?: z.infer<typeof ProfileGetSchema>) => {
+  let userId: string;
+
+  if (input) {
+    userId = ProfileGetSchema.parse(input).id;
+  } else {
+    const session = await authorize();
+    userId = session.user.id;
+  }
 
   return db.query.profiles.findFirst({
-    where: eq(profiles.id, session.user.id),
+    where: eq(profiles.id, userId),
   });
 };
 
@@ -61,6 +72,27 @@ export const update = async (
 
   if (roomId) {
     await pusher.trigger(roomId, "api.profiles.update", profile);
+  }
+
+  return profile;
+};
+
+export const create = async (input: z.infer<typeof ProfileCreateSchema>) => {
+  const { id, ...values } = ProfileCreateSchema.parse(input);
+  const results = await db
+    .insert(profiles)
+    .values({
+      id,
+      ...values,
+      avatarUrl: getRandomAvatarUrl(),
+      color: getRandomColor(),
+    })
+    .returning();
+
+  const profile = results.pop();
+
+  if (!profile) {
+    throw new Error("Failed to create profile");
   }
 
   return profile;
