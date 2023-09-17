@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { headers } from "next/headers";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { Navbar } from "../_components/navbar";
+import { Navbar } from "./_components/navbar";
 import { cn } from "@/lib/utils";
 import { BackgroundImage } from "../_components/background-image";
 

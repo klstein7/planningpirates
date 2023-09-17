@@ -1,5 +1,5 @@
 import { api } from "@/lib/server/actions";
-import { UserDropdownMenu } from "../(authenticated)/_components/user-dropdown-menu";
+import { UserDropdownMenu } from "./user-dropdown-menu";
 import { HomeButton } from "./home-button";
 
 export const Navbar = async () => {

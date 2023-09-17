@@ -57,7 +57,16 @@ export const SignInForm = () => {
         <RiGoogleFill className="mr-2 h-5 w-5" />
         Sign in with Google
       </Button>
-      <Button variant="outline">
+      <Button
+        variant="outline"
+        onClick={() => {
+          const callbackUrl = params.get("callbackUrl");
+
+          signIn("github", {
+            callbackUrl: callbackUrl || undefined,
+          });
+        }}
+      >
         <RiGithubFill className="mr-2 h-5 w-5" />
         Sign in with Github
       </Button>

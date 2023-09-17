@@ -54,25 +54,31 @@ const getModes = (arr: number[]): number[] => {
 };
 
 export function getAlignmentPercentage(
-  selectedValues: number[]
+  selectedValues: number[],
+  tolerance: number = 1
 ): number | null {
-  if (!selectedValues || selectedValues.length === 0) {
+  if (selectedValues.length === 0) {
     return null;
   }
 
+  if (selectedValues.length === 1) {
+    return 100;
+  }
+
+  // General case
   const modes = getModes(selectedValues);
 
+  // If no modes, then no alignment
   if (modes.length === 0) {
     return 0;
   }
 
-  const tolerance = 1;
   const alignedValuesCount = selectedValues.filter((value) =>
     modes.some((mode) => Math.abs(value - mode) <= tolerance)
   ).length;
 
   const totalValues = selectedValues.length;
-  const percentage = (alignedValuesCount / totalValues) * 100;
+  let percentage = (alignedValuesCount / totalValues) * 100;
 
   return percentage % 1 === 0 ? percentage : parseFloat(percentage.toFixed(2));
 }
