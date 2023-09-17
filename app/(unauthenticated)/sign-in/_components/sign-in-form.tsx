@@ -41,14 +41,7 @@ export const SignInForm = () => {
       </Form>
       <Button>Sign in with email</Button>
       <Separator />
-      <Button
-        variant="outline"
-        onClick={async () => {
-          const user = await signIn("google");
-
-          console.log(user);
-        }}
-      >
+      <Button variant="outline" onClick={() => signIn("google")}>
         <RiGoogleFill className="mr-2 h-5 w-5" />
         Sign in with Google
       </Button>

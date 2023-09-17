@@ -29,20 +29,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { RouterOutput } from "@/lib/trpc/utils";
 import { HiPaintBrush } from "react-icons/hi2";
 import { ProfileUpdateSchema } from "@/lib/server/schemas/profiles";
 import { useRoomId } from "../r/[roomId]/_hooks/use-room-id";
-import { useUpdateProfile } from "../_hooks/use-update-profile";
+import { API, api } from "@/lib/server/actions";
 
 export const UpdateUserProfileDialog = ({
   profile,
 }: {
-  profile: NonNullable<RouterOutput["profiles"]["get"]>;
+  profile: NonNullable<API["profiles"]["get"]>;
 }) => {
   const { roomId } = useRoomId();
-  const updateProfileMutation = useUpdateProfile();
 
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof ProfileUpdateSchema>>({
@@ -133,13 +132,14 @@ export const UpdateUserProfileDialog = ({
             Cancel
           </Button>
           <Button
-            loading={updateProfileMutation.isLoading}
+            loading={loading}
             onClick={form.handleSubmit(async (values) => {
-              console.log(values);
-              await updateProfileMutation.mutateAsync({
+              setLoading(true);
+              await api.profiles.update({
                 ...values,
                 roomId,
               });
+              setLoading(false);
               setOpen(false);
             })}
           >

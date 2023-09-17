@@ -40,7 +40,7 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
       async (data: RouterOutput["players"]["update"]) => {
         console.log("api.profiles.update", data);
 
-        // await context.players.find.invalidate({ roomId });
+        api.rooms.revalidate({ roomId });
       }
     );
 
