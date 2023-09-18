@@ -1,5 +1,7 @@
 # planning pirates
 
+https://planningpirates.vercel.app/
+
 ## Description
 
 A planning poker type app with a pirate theme.
