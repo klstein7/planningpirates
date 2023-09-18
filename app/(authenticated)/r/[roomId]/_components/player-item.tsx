@@ -1,26 +1,27 @@
 import { getBackgroundColor, getTextColor } from "@/app/_util/colors";
-import { RouterOutput } from "@/lib/trpc/utils";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useIsHost } from "../_hooks/use-is-host";
 import { PiCrownSimpleFill } from "react-icons/pi";
+import { API } from "@/lib/server/actions";
 
 export const PlayerItem = ({
   player,
 }: {
-  player: RouterOutput["players"]["find"][number];
+  player: API["players"]["find"][number];
 }) => {
   return (
     <div
       // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
       className={cn(
-        "flex w-24 flex-col items-center gap-3 rounded-sm bg-opacity-20 p-3",
+        "flex w-20 flex-col items-center gap-3 rounded-sm bg-opacity-20 p-3 md:w-24",
         getBackgroundColor(player.profile.color)
       )}
     >
       <div
         className={cn(
-          "border-border/20 flex h-16 w-10 items-center justify-center rounded border",
+          "border-border/20 flex h-12 w-8 items-center justify-center rounded border md:h-16 md:w-10",
           player.selectedValue !== null &&
             getBackgroundColor(player.profile.color)
         )}
@@ -33,7 +34,7 @@ export const PlayerItem = ({
       />
       <div
         className={cn(
-          "flex w-20 items-center justify-center gap-1 text-xs font-medium",
+          "flex w-12 items-center justify-center gap-1 text-xs font-medium",
           getTextColor(player.profile.color)
         )}
       >

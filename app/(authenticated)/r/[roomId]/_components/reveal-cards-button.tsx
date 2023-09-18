@@ -7,7 +7,7 @@ import { api } from "@/lib/server/actions";
 import { useState } from "react";
 import { useIsHost } from "../_hooks/use-is-host";
 
-export const RevealCardsButton = () => {
+export const RevealCardsButton = ({ disabled }: { disabled: boolean }) => {
   const [loading, setLoading] = useState(false);
   const { roomId } = useRoomId();
   const { isHost } = useIsHost();
@@ -18,6 +18,7 @@ export const RevealCardsButton = () => {
 
   return (
     <Button
+      disabled={disabled}
       loading={loading}
       onClick={async () => {
         setLoading(true);

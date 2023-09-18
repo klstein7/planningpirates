@@ -27,9 +27,12 @@ export const CardList = ({
   );
   return (
     <div
-      className={cn("bg-background/10 flex gap-3 rounded-t-lg p-3", {
-        "select-none opacity-50": !player,
-      })}
+      className={cn(
+        "bg-background/10 flex flex-wrap justify-center gap-3 rounded-t-lg p-3",
+        {
+          "select-none opacity-50": !player,
+        }
+      )}
     >
       {CARDS.map((card) => (
         <CardItem

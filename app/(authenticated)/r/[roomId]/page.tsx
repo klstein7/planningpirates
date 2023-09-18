@@ -35,7 +35,9 @@ export default async function RoomPage({
     <PlayersProvider players={players}>
       <div className="flex flex-1 flex-col gap-3">
         <PlayerList players={players} />
-        {player && <CardList player={player} />}
+        <div className="flex items-center justify-center">
+          {player && <CardList player={player} />}
+        </div>
       </div>
     </PlayersProvider>
   );
