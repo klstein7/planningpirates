@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,13 +12,14 @@ import { UpdateUserProfileDialog } from "./update-profile-form";
 
 import { PiSignOutDuotone } from "react-icons/pi";
 import { API } from "@/lib/server/actions";
-import { SignOutButton } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 
 export const UserDropdownMenu = ({
   profile,
 }: {
   profile: API["profiles"]["get"];
 }) => {
+  const { signOut } = useAuth();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,13 +33,9 @@ export const UserDropdownMenu = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" side="bottom">
         {profile && <UpdateUserProfileDialog profile={profile} />}
-        <DropdownMenuItem asChild>
-          <SignOutButton>
-            <div className="flex items-center">
-              <PiSignOutDuotone className="mr-2 h-5 w-5" />
-              Sign out
-            </div>
-          </SignOutButton>
+        <DropdownMenuItem onClick={() => signOut()}>
+          <PiSignOutDuotone className="mr-2 h-5 w-5" />
+          Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
