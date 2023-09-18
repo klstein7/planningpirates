@@ -10,7 +10,6 @@ export default async function RoomLayout({
     roomId: string;
   };
 }) {
-  const profile = await api.profiles.get();
   return (
     <>
       <div className="flex h-full w-full flex-col items-center gap-3">
