@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { pusher } from ".";
 import { API, api } from "@/lib/server/actions";
 import { useAuth } from "@clerk/nextjs";
+import { env } from "process";
 
 export const PusherEventListener = ({ roomId }: { roomId: string }) => {
   const { userId } = useAuth();
@@ -12,7 +13,9 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
     const channel = pusher.subscribe(roomId);
 
     channel.bind("api.players.create", async () => {
-      console.log("api.players.create");
+      if (env.NODE_ENV === "development") {
+        console.log("api.players.create");
+      }
 
       api.rooms.revalidate({ roomId });
     });
@@ -20,7 +23,9 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
     channel.bind(
       "api.players.update",
       async (data: API["players"]["update"]) => {
-        console.log("api.players.update", data);
+        if (env.NODE_ENV === "development") {
+          console.log("api.players.update", data);
+        }
 
         if (userId === data.profileId) {
           return;
@@ -33,14 +38,18 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
     channel.bind(
       "api.profiles.update",
       async (data: API["players"]["update"]) => {
-        console.log("api.profiles.update", data);
+        if (env.NODE_ENV === "development") {
+          console.log("api.profiles.update", data);
+        }
 
         api.rooms.revalidate({ roomId });
       }
     );
 
     channel.bind("api.rooms.update", async (data: API["rooms"]["update"]) => {
-      console.log("api.rooms.update", data);
+      if (env.NODE_ENV === "development") {
+        console.log("api.rooms.update", data);
+      }
 
       api.rooms.revalidate({ roomId });
     });

@@ -12,6 +12,7 @@ import { customAlphabet } from "nanoid";
 import { openai } from "@/lib/openai";
 import { getAlignmentPercentage, getAverage, getMedian } from "@/lib/utils";
 import { pusher } from "@/lib/pusher";
+import { env } from "@/lib/env.mjs";
 
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4);
 
@@ -97,7 +98,7 @@ export const update = async (input: z.infer<typeof RoomUpdateSchema>) => {
       .map((p) => p.selectedValue) as number[];
 
     const completion = await openai.chat.completions.create({
-      model: "ft:gpt-3.5-turbo-0613:personal::7zUH19os",
+      model: env.OPENAI_FINE_TUNED_MODEL,
       messages: [
         {
           role: "user",
