@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PlanningPirates
 
-## Getting Started
+## Description
 
-First, run the development server:
+A planning poker type app with a pirate theme.
+
+## Features
+
+- Clerk authentication
+- PusherJS realtime updates
+- Next.js 13 server actions and server components
+- Drizzle ORM
+- Neon serverless Postgres
+
+## Installation
+
+### Prerequisites
+
+- pnpm
+- Node
+
+### Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clone the repository
+git clone https://github.com/klstein7/planningpirates.git
+
+# Navigate to the project directory
+cd planningpirates
+
+# Install dependencies
+pnpm i
+
+# Setup environment variables
+export DATABASE_URL=your_database_url
+export PUSHER_APP_ID=your_pusher_app_id
+export NEXT_PUBLIC_PUSHER_KEY=your_next_public_pusher_key
+export PUSHER_SECRET=your_pusher_secret
+export NEXT_PUBLIC_PUSHER_CLUSTER=your_next_public_pusher_cluster
+export OPENAI_API_KEY=your_openai_api_key
+export NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_next_public_clerk_publishable_key
+export CLERK_SECRET_KEY=your_clerk_secret_key
+export NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+export NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-in
+export OPENAI_FINE_TUNED_MODEL=your_openai_fine_tuned_model
+
+# Run the project
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are always welcome! To contribute:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Open a pull request with your changes.
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+This project is licensed under the [MIT License](LICENSE).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Authors
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [@klstein7](https://www.github.com/klstein7)
