@@ -1,5 +1,3 @@
-import { LandingCard } from "@/app/_components/landing-card";
-
 import { SignIn } from "@clerk/nextjs";
 
 export default async function SignInPage() {

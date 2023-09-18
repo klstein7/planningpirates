@@ -1,18 +1,18 @@
 import { useMemo } from "react";
 import { usePlayers } from "./use-players";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@clerk/nextjs";
 
 export const usePlayer = () => {
-  const session = useSession();
+  const { userId } = useAuth();
   const { players } = usePlayers();
 
   const player = useMemo(() => {
-    if (!session.data?.user?.id) {
+    if (!userId) {
       return null;
     }
 
-    return players.find((player) => player.profile.id === session.data.user.id);
-  }, [players, session.data]);
+    return players.find((player) => player.profile.id === userId);
+  }, [players, userId]);
 
   return {
     player,

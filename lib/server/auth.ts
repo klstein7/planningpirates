@@ -1,12 +1,11 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { auth, currentUser } from "@clerk/nextjs";
 
 export const authorize = async () => {
-  const session = await getServerSession(authOptions);
+  const user = await currentUser();
 
-  if (!session) {
+  if (!user) {
     throw new Error("Unauthorized");
   }
 
-  return session;
+  return { user };
 };

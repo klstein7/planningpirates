@@ -13,6 +13,7 @@ import {
   ProfileUpdateSchema,
 } from "../schemas/profiles";
 import { pusher } from "@/lib/pusher";
+import { revalidatePath } from "next/cache";
 
 export const sync = async () => {
   const session = await authorize();
@@ -24,11 +25,13 @@ export const sync = async () => {
   if (!profile) {
     await db.insert(profiles).values({
       id: session.user.id,
-      name: session.user.name ?? "",
+      name: session.user.firstName ?? "",
       avatarUrl: getRandomAvatarUrl(),
       color: getRandomColor(),
     });
   }
+
+  revalidatePath("/");
 };
 
 export const get = async (input?: z.infer<typeof ProfileGetSchema>) => {

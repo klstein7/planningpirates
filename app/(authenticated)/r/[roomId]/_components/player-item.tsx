@@ -12,13 +12,7 @@ export const PlayerItem = ({
   player: API["players"]["find"][number];
 }) => {
   return (
-    <div
-      // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-      className={cn(
-        "flex w-20 flex-col items-center gap-3 rounded-sm bg-opacity-20 p-3 md:w-24",
-        getBackgroundColor(player.profile.color)
-      )}
-    >
+    <div className="border-border/20 flex w-20 flex-col items-center gap-3 rounded-sm border bg-black/20 p-3 backdrop-blur-md md:w-24">
       <div
         className={cn(
           "border-border/20 flex h-12 w-8 items-center justify-center rounded border md:h-16 md:w-10",

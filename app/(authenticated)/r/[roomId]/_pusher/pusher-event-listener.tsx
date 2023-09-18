@@ -3,21 +3,17 @@
 import { useEffect } from "react";
 import { pusher } from ".";
 import { API, api } from "@/lib/server/actions";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@clerk/nextjs";
 
 export const PusherEventListener = ({ roomId }: { roomId: string }) => {
-  const session = useSession();
+  const { userId } = useAuth();
 
   useEffect(() => {
     const channel = pusher.subscribe(roomId);
 
     channel.bind("api.players.create", async () => {
       console.log("api.players.create");
-      /*
-        if (data.id === player.id) {
-          return;
-        }
-        */
+
       api.rooms.revalidate({ roomId });
     });
 
@@ -26,7 +22,7 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
       async (data: API["players"]["update"]) => {
         console.log("api.players.update", data);
 
-        if (session.data?.user?.id === data.profileId) {
+        if (userId === data.profileId) {
           return;
         }
 
@@ -53,7 +49,7 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
       channel.unbind();
       pusher.unsubscribe(roomId);
     };
-  }, [roomId, session.data]);
+  }, [roomId, userId]);
 
   return null;
 };
