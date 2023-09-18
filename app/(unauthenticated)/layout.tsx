@@ -1,7 +1,13 @@
+import { BackgroundImage } from "../_components/background-image";
+
 export default async function UnauthenticatedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex flex-1 flex-col">{children}</div>;
+  return (
+    <BackgroundImage>
+      <div className="flex flex-1 items-center justify-center">{children}</div>
+    </BackgroundImage>
+  );
 }
