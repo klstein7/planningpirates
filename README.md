@@ -1,4 +1,4 @@
-# PlanningPirates
+# planning pirates
 
 ## Description
 
