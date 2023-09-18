@@ -19,17 +19,6 @@ export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),
   callbacks: {
     session: async ({ session, user }) => {
-      const profile = await api.profiles.get({
-        id: user.id,
-      });
-
-      if (!profile) {
-        await api.profiles.create({
-          id: user.id,
-          name: user.name ?? "New user",
-        });
-      }
-
       session.user.id = user.id;
 
       return session;

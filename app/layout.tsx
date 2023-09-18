@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import NextAuthProvider from "@/lib/auth/Provider";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
@@ -22,12 +23,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <NextAuthProvider>
-          <div className="flex h-[calc(100dvh)] flex-col">
-            <div className="flex flex-1">{children}</div>
-          </div>
-          <Toaster />
-        </NextAuthProvider>
+        <ClerkProvider>
+          {" "}
+          <NextAuthProvider>
+            <div className="flex h-[calc(100dvh)] flex-col">
+              <div className="flex flex-1">{children}</div>
+            </div>
+            <Toaster />
+          </NextAuthProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

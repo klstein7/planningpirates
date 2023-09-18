@@ -1,32 +1,24 @@
-import { getServerSession } from "next-auth";
-import { headers } from "next/headers";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
-import { Navbar } from "./_components/navbar";
-import { cn } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
 import { BackgroundImage } from "../_components/background-image";
+import { ProfileProvider } from "./_context/profile-provider";
+import { api } from "@/lib/server/actions";
 
 export default async function AuthenticatedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = headers();
+  const { userId } = auth();
 
-  const url = headersList.get("x-url") || "";
-
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect(`/sign-in?callbackUrl=${url}`);
-  }
+  const profile = await api.profiles.get({ id: userId as string });
 
   return (
     <BackgroundImage>
-      <div className="flex flex-1 flex-col">
-        <Navbar />
-        <div className="flex flex-1 flex-col">{children}</div>
-      </div>
+      <ProfileProvider profile={profile}>
+        <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col">{children}</div>
+        </div>
+      </ProfileProvider>
     </BackgroundImage>
   );
 }

@@ -1,12 +1,14 @@
-import { NextResponse } from "next/server";
+import { authMiddleware } from "@clerk/nextjs";
+import { getAuth } from "@clerk/nextjs/server";
 
-export function middleware(request: Request) {
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-url", request.url);
+// This example protects all routes including api/trpc routes
+// Please edit this to allow other routes to be public as needed.
+// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
+export default authMiddleware({
+  publicRoutes: ["/auth/callback"],
+  debug: false,
+});
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
-}
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
