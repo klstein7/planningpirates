@@ -55,8 +55,9 @@ const getModes = (arr: number[]): number[] => {
 
 export function getAlignmentPercentage(
   selectedValues: number[],
-  tolerance: number = 1
+  tolerance: number = 1 // Making tolerance a parameter with a default value
 ): number | null {
+  // Special cases for empty array or single value
   if (selectedValues.length === 0) {
     return null;
   }
@@ -73,12 +74,23 @@ export function getAlignmentPercentage(
     return 0;
   }
 
-  const alignedValuesCount = selectedValues.filter((value) =>
-    modes.some((mode) => Math.abs(value - mode) <= tolerance)
-  ).length;
+  // Calculate aligned values based on the mode(s)
+  let alignedValuesCount = 0;
+
+  for (const mode of modes) {
+    const countOfMode = selectedValues.filter((value) => value === mode).length;
+    if (countOfMode > 1) {
+      alignedValuesCount += countOfMode;
+    } else {
+      alignedValuesCount += selectedValues.filter(
+        (value) => Math.abs(value - mode) <= tolerance
+      ).length;
+    }
+  }
 
   const totalValues = selectedValues.length;
   let percentage = (alignedValuesCount / totalValues) * 100;
 
+  // Rounding to 2 decimal places only if necessary
   return percentage % 1 === 0 ? percentage : parseFloat(percentage.toFixed(2));
 }
