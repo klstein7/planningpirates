@@ -12,4 +12,6 @@ export const PlayerSyncSchema = createSelectSchema(players).pick({
 export const PlayerUpdateSchema = createInsertSchema(players).pick({
   id: true,
   selectedValue: true,
+  role: true,
+  roomId: true,
 });

@@ -50,6 +50,7 @@ export const CardList = ({
             await api.players.update({
               id: player!.id,
               selectedValue,
+              roomId: player!.roomId,
             });
           }}
         >

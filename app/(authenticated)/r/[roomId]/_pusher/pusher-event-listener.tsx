@@ -27,10 +27,6 @@ export const PusherEventListener = ({ roomId }: { roomId: string }) => {
           console.log("api.players.update", data);
         }
 
-        if (userId === data.profileId) {
-          return;
-        }
-
         api.rooms.revalidate({ roomId });
       }
     );

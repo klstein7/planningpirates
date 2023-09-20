@@ -3,6 +3,7 @@ import { PlayerItem } from "./player-item";
 import { RevealCardsButton } from "./reveal-cards-button";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { PlayerDropdownMenu } from "./player-dropdown-menu";
 
 type Props = {
   players: API["players"]["find"];
@@ -24,7 +25,7 @@ export const Room = forwardRef<HTMLDivElement, Props>(
         >
           <div className="flex flex-wrap gap-3">
             {players.map((player) => (
-              <PlayerItem key={player.id} player={player} />
+              <PlayerDropdownMenu key={player.id} player={player} />
             ))}
           </div>
           <RevealCardsButton disabled={!hasAtLeastOneSelectedValue} />
@@ -38,7 +39,7 @@ export const Room = forwardRef<HTMLDivElement, Props>(
           {players
             .filter((_, index) => index % 4 === 0 || index % 4 === 3)
             .map((player) => (
-              <PlayerItem key={player.id} player={player} />
+              <PlayerDropdownMenu key={player.id} player={player} />
             ))}
         </div>
         <div className="flex gap-3">
@@ -46,7 +47,7 @@ export const Room = forwardRef<HTMLDivElement, Props>(
             {players
               .filter((_, index) => index % 4 === 2)
               .map((player) => (
-                <PlayerItem key={player.id} player={player} />
+                <PlayerDropdownMenu key={player.id} player={player} />
               ))}
           </div>
           <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-3 bg-[url('/images/room.png')] bg-contain bg-center">
@@ -56,7 +57,7 @@ export const Room = forwardRef<HTMLDivElement, Props>(
             {players
               .filter((_, index) => index % 4 === 1)
               .map((player) => (
-                <PlayerItem key={player.id} player={player} />
+                <PlayerDropdownMenu key={player.id} player={player} />
               ))}
           </div>
         </div>
