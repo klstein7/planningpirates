@@ -26,7 +26,7 @@ export const ShareRoomIdButton = () => {
           <Button
             className="h-auto border bg-black/5 text-2xl font-bold backdrop-blur-md"
             onClick={() => {
-              copy(roomId);
+              copy(window.location.href);
               toast({
                 title: "Ye've seized the room code!",
                 description: "Now ye can share it with yer mates!",
