@@ -2,6 +2,12 @@
 
 https://planningpirates.vercel.app/
 
+
+
+https://github.com/klstein7/planningpirates/assets/3789620/7a8f46a5-988b-44ee-a0cd-c2ffcb64cbb4
+
+
+
 ## Description
 
 A planning poker type app with a pirate theme.
