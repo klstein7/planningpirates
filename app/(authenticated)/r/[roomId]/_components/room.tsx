@@ -4,6 +4,7 @@ import { RevealCardsButton } from "./reveal-cards-button";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { PlayerDropdownMenu } from "./player-dropdown-menu";
+import { ShareRoomIdButton } from "./share-room-id-button";
 
 type Props = {
   players: API["players"]["find"];
@@ -29,6 +30,7 @@ export const Room = forwardRef<HTMLDivElement, Props>(
             ))}
           </div>
           <RevealCardsButton disabled={!hasAtLeastOneSelectedValue} />
+          <ShareRoomIdButton />
         </div>
       );
     }
@@ -51,6 +53,7 @@ export const Room = forwardRef<HTMLDivElement, Props>(
               ))}
           </div>
           <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-3 bg-[url('/images/room.png')] bg-contain bg-center">
+            <ShareRoomIdButton />
             <RevealCardsButton disabled={!hasAtLeastOneSelectedValue} />
           </div>
           <div className="flex w-24 flex-col flex-wrap items-center justify-center gap-3">
